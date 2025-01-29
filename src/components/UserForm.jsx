@@ -52,5 +52,6 @@ const UserForm = ({ addUser }) => {
     </form>
   );
 };
+``;
 
 export default UserForm;
