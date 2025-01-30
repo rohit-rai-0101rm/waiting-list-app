@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Container, TextField, Button, Typography, Alert } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import { faker } from "@faker-js/faker";
-import { useNavigate } from "react-router-dom"; // For navigation
+import { useNavigate } from "react-router-dom";
 import { addUser } from "../redux/slices/waitlistSlice.js";
 
-const inviteCodes = ["austin234", "alvin145", "karthik321"]; // Valid codes
+const inviteCodes = ["austin234", "alvin145", "karthik321"];
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Initialize the navigate function
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Simulate real-time addition of users every 10 seconds
+  // Automatically add random users every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       const randomName = faker.person.fullName();
@@ -22,10 +30,14 @@ const RegistrationPage = () => {
         Math.random() > 0.5
           ? inviteCodes[Math.floor(Math.random() * inviteCodes.length)]
           : "";
-      dispatch(addUser({ name: randomName, inviteCode: randomCode }));
-    }, 10000);
 
-    return () => clearInterval(interval);
+      // Set loading as true while adding a user
+      setLoading(true);
+      dispatch(addUser({ name: randomName, inviteCode: randomCode }));
+      setLoading(false); // Set loading to false after dispatching the user
+    }, 10000); // Run every 10 seconds
+
+    return () => clearInterval(interval); // Clean up on unmount
   }, [dispatch]);
 
   const handleSubmit = (e) => {
@@ -34,12 +46,17 @@ const RegistrationPage = () => {
       setMessage("Name is required");
       return;
     }
+
+    // Set loading as true while adding a user
+    setLoading(true);
     dispatch(addUser({ name, inviteCode }));
     setMessage(
       inviteCodes.includes(inviteCode)
         ? "Successfully added with invite code!"
         : "Added to general waitlist."
     );
+    setLoading(false); // Set loading to false after dispatching the user
+
     setName("");
     setInviteCode("");
   };
@@ -91,8 +108,13 @@ const RegistrationPage = () => {
           color="primary"
           fullWidth
           sx={{ mt: 2 }}
+          disabled={loading} // Disable button while loading
         >
-          Join Waitlist
+          {loading ? (
+            <CircularProgress size={24} color="secondary" />
+          ) : (
+            "Join Waitlist"
+          )}
         </Button>
       </form>
 
@@ -101,7 +123,7 @@ const RegistrationPage = () => {
         color="primary"
         fullWidth
         sx={{ mt: 3 }}
-        onClick={handleNavigateToWaitlist} // Navigate to waitlist page
+        onClick={handleNavigateToWaitlist}
       >
         View Waitlist Status
       </Button>
