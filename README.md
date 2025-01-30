@@ -97,4 +97,3 @@ You can view the live version of the app here:
 ## License
 
 This project is licensed under the MIT License.
-```
