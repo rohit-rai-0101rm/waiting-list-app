@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Alert,
-  List,
-  ListItem,
-  ListItemText,
-  Card,
-  CardContent,
-} from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Container, TextField, Button, Typography, Alert } from "@mui/material";
 import { faker } from "@faker-js/faker";
+import { useNavigate } from "react-router-dom"; // For navigation
 import { addUser } from "../redux/slices/waitlistSlice.js";
 
 const inviteCodes = ["austin234", "alvin145", "karthik321"]; // Valid codes
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.waitlist.users);
   const [name, setName] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate(); // Initialize the navigate function
 
+  // Simulate real-time addition of users every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       const randomName = faker.person.fullName();
@@ -52,6 +42,10 @@ const RegistrationPage = () => {
     );
     setName("");
     setInviteCode("");
+  };
+
+  const handleNavigateToWaitlist = () => {
+    navigate("/status"); // Navigate to the Waitlist page
   };
 
   return (
@@ -102,25 +96,15 @@ const RegistrationPage = () => {
         </Button>
       </form>
 
-      <Typography variant="h6" sx={{ mt: 4 }}>
-        Current Waitlist
-      </Typography>
-      <List>
-        {users.map((user, index) => (
-          <Card key={index} sx={{ mb: 2 }}>
-            <CardContent>
-              <ListItem>
-                <ListItemText
-                  primary={`${user.name} (${
-                    user.inviteCode ? "Invited" : "General"
-                  })`}
-                  secondary={`Position: ${index + 1}`}
-                />
-              </ListItem>
-            </CardContent>
-          </Card>
-        ))}
-      </List>
+      <Button
+        variant="outlined"
+        color="primary"
+        fullWidth
+        sx={{ mt: 3 }}
+        onClick={handleNavigateToWaitlist} // Navigate to waitlist page
+      >
+        View Waitlist Status
+      </Button>
     </Container>
   );
 };

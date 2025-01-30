@@ -1,28 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Typography, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Container,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Card,
+  CardContent,
+  Pagination,
+  Box,
+} from "@mui/material";
 
 const StatusPage = () => {
-  const users = useSelector((state) => state.waitlist.users);
+  const users = useSelector((state) => state.waitlist.users); // Get users from Redux store
+  const usersPerPage = 5; // Number of users per page
+  const [page, setPage] = useState(1); // Current page state
+
+  // Calculate the index range for users on the current page
+  const startIndex = (page - 1) * usersPerPage;
+  const currentPageUsers = users.slice(startIndex, startIndex + usersPerPage);
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Typography variant="h4">Current Waiting List</Typography>
+    <Container
+      maxWidth="md"
+      sx={{
+        mt: 5,
+        bgcolor: "background.paper",
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 2,
+      }}
+    >
+      <Typography variant="h4" color="primary" gutterBottom>
+        Current Waitlist
+      </Typography>
+
       <List>
-        {users.map((user, index) => (
-          <ListItem key={user.id}>
-            <ListItemText
-              primary={`${user.name} (${
-                user.isInvited ? "Invited" : "General"
-              })`}
-              secondary={`Position: ${index + 1}, Estimated Wait: ${
-                index + 1
-              } day(s)`}
-            />
-          </ListItem>
+        {currentPageUsers.map((user, index) => (
+          <Card key={index} sx={{ mb: 2 }}>
+            <CardContent>
+              <ListItem>
+                <ListItemText
+                  primary={`${user.name} (${
+                    user.inviteCode ? "Invited" : "General"
+                  })`}
+                  secondary={`Position: ${
+                    startIndex + index + 1
+                  } | Estimated Wait Time: ${startIndex + index + 1} days`}
+                />
+              </ListItem>
+            </CardContent>
+          </Card>
         ))}
       </List>
-    </div>
+
+      {/* Pagination Component */}
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+        <Pagination
+          count={Math.ceil(users.length / usersPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
+    </Container>
   );
 };
 
