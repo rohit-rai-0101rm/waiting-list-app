@@ -1,15 +1,15 @@
 :root {
   color: #213547;
   background-color: #ffffff;
-  /* Change from #242424 (dark) to #ffffff (light) */
+
 }
 
 input,
 textarea {
   background-color: #ffffff;
-  /* White background for input fields */
+
   color: #000000;
-  /* Black text */
+
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
@@ -17,9 +17,9 @@ textarea {
 
 button {
   background-color: #646cff;
-  /* Visible button background */
+
   color: #fff;
-  /* White text */
+
 }
 
 button:hover {
@@ -28,9 +28,9 @@ button:hover {
 
 .card {
   background: #333;
-  /* Darker background for cards */
+
   color: white;
-  /* Ensure text inside is white */
+
   padding: 20px;
   border-radius: 10px;
 }
@@ -40,8 +40,8 @@ button:hover {
   input,
   textarea {
     background-color: #444;
-    /* Darker background for dark mode */
+
     color: #fff;
-    /* Light text for dark mode */
+
   }
 }

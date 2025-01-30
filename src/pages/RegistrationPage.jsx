@@ -7,7 +7,6 @@ const validInviteCodes = ["austin234", "alvin145", "karthik321"];
 const RegistrationPage = () => {
   const navigate = useNavigate();
 
-  // Load users from localStorage
   const [users, setUsers] = useState(() => {
     const storedUsers = localStorage.getItem("waitingList");
     return storedUsers ? JSON.parse(storedUsers) : [];
@@ -19,15 +18,13 @@ const RegistrationPage = () => {
     const newUser = {
       id: name + Math.random().toString(36).substr(2, 9),
       name,
-      inviteCode: isValidCode ? inviteCode : null, // Store only valid codes
+      inviteCode: isValidCode ? inviteCode : null,
       isInvited: isValidCode,
     };
 
-    // Separate invited and general users
     const invitedUsers = users.filter((user) => user.isInvited);
     const generalUsers = users.filter((user) => !user.isInvited);
 
-    // Add user to the correct list
     if (isValidCode) {
       invitedUsers.push(newUser);
     } else {
