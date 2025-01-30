@@ -98,5 +98,3 @@ You can view the live version of the app here:
 
 This project is licensed under the MIT License.
 ```
-
-Just replace `https://your-app-name.netlify.app` with your actual Netlify URL once the app is deployed.
