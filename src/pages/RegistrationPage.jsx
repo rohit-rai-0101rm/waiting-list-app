@@ -20,6 +20,7 @@ const RegistrationPage = () => {
   const [inviteCode, setInviteCode] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [randomUserMessage, setRandomUserMessage] = useState(""); // New state for random user alert
   const navigate = useNavigate();
 
   // Automatically add random users every 10 seconds
@@ -31,10 +32,16 @@ const RegistrationPage = () => {
           ? inviteCodes[Math.floor(Math.random() * inviteCodes.length)]
           : "";
 
-      // Set loading as true while adding a user
+      // Dispatch the user and set loading
       setLoading(true);
       dispatch(addUser({ name: randomName, inviteCode: randomCode }));
-      setLoading(false); // Set loading to false after dispatching the user
+      setLoading(false);
+
+      // Show an alert for the random user addition
+      const randomMessage = inviteCodes.includes(randomCode)
+        ? `New user added with valid invite code: ${randomCode}`
+        : "New user added to the general waitlist.";
+      setRandomUserMessage(randomMessage);
     }, 10000); // Run every 10 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
@@ -80,11 +87,15 @@ const RegistrationPage = () => {
         Join the Waitlist
       </Typography>
 
+      {/* Display message on form submission */}
       {message && (
         <Alert severity={inviteCodes.includes(inviteCode) ? "success" : "info"}>
           {message}
         </Alert>
       )}
+
+      {/* Display random user addition message */}
+      {randomUserMessage && <Alert severity="info">{randomUserMessage}</Alert>}
 
       <form onSubmit={handleSubmit}>
         <TextField
