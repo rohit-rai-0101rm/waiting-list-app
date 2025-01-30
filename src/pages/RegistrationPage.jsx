@@ -42,6 +42,11 @@ const RegistrationPage = () => {
         ? `New user added with valid invite code: ${randomCode}`
         : "New user added to the general waitlist.";
       setRandomUserMessage(randomMessage);
+
+      // Hide the random user alert after 3 seconds
+      setTimeout(() => {
+        setRandomUserMessage("");
+      }, 3000);
     }, 10000); // Run every 10 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
@@ -66,6 +71,11 @@ const RegistrationPage = () => {
 
     setName("");
     setInviteCode("");
+
+    // Hide the message after 3 seconds
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   const handleNavigateToWaitlist = () => {

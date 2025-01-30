@@ -31,7 +31,7 @@ const StatusPage = () => {
   };
 
   useEffect(() => {
-    setLoading(false); // Stop loading when the list is ready
+    setLoading(false);
   }, [users]);
 
   return (
