@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 
 const StatusPage = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const storedUsers = localStorage.getItem("waitingList");
-    if (storedUsers) {
-      setUsers(JSON.parse(storedUsers));
-    }
-  }, []);
+  const users = useSelector((state) => state.waitlist.users);
 
   return (
     <div style={{ padding: "20px" }}>
