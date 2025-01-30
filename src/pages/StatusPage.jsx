@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
-import { useLocation } from "react-router-dom";
 
 const StatusPage = () => {
-  const { state } = useLocation();
-  const { users } = state;
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const storedUsers = localStorage.getItem("waitingList");
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    }
+  }, []);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -16,7 +21,9 @@ const StatusPage = () => {
               primary={`${user.name} (${
                 user.isInvited ? "Invited" : "General"
               })`}
-              secondary={`Position: ${user.position}, Estimated Wait: ${user.position} day(s)`}
+              secondary={`Position: ${index + 1}, Estimated Wait: ${
+                index + 1
+              } day(s)`}
             />
           </ListItem>
         ))}
