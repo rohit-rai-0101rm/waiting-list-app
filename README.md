@@ -1,4 +1,3 @@
-Here's a `README.md` formatted in Markdown with proper structure, adhering to best practices for readability and clarity:
 
 ```markdown
 # Waiting List App
@@ -13,6 +12,7 @@ A ReactJS-based application to manage a waiting list with real-time updates, lev
 - [Technologies](#technologies)
 - [Features](#features)
 - [License](#license)
+- [Deployed URL](#deployed-url)
 
 ## Installation
 
@@ -88,9 +88,15 @@ This project uses the following technologies:
 - **Lyft Branding**: The UI is designed to align with Lyft's branding guidelines for a seamless experience.
 - **Responsive Design**: The app is fully responsive, ensuring it works well on various devices.
 
+## Deployed URL
+
+You can view the live version of the app here:
+
+[Deployed URL](https://ephemeral-biscochitos-9c57d5.netlify.app/)
+
 ## License
 
 This project is licensed under the MIT License.
 ```
 
-This structure follows the Markdown conventions for readability, organization, and proper usage of headers, code blocks, and lists. It ensures that anyone looking at the README can easily find the installation steps, usage instructions, and key features of your project.
+Just replace `https://your-app-name.netlify.app` with your actual Netlify URL once the app is deployed.
