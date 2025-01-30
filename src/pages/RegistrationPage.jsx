@@ -23,9 +23,9 @@ const RegistrationPage = () => {
           ? inviteCodes[Math.floor(Math.random() * inviteCodes.length)]
           : "";
       dispatch(addUser({ name: randomName, inviteCode: randomCode }));
-    }, 10000); // Add new user every 10 seconds
+    }, 10000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   const handleSubmit = (e) => {
@@ -45,7 +45,7 @@ const RegistrationPage = () => {
   };
 
   const handleNavigateToWaitlist = () => {
-    navigate("/status"); // Navigate to the Waitlist page
+    navigate("/status");
   };
 
   return (

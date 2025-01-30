@@ -13,11 +13,10 @@ import {
 } from "@mui/material";
 
 const StatusPage = () => {
-  const users = useSelector((state) => state.waitlist.users); // Get users from Redux store
-  const usersPerPage = 5; // Number of users per page
-  const [page, setPage] = useState(1); // Current page state
+  const users = useSelector((state) => state.waitlist.users);
+  const usersPerPage = 5;
+  const [page, setPage] = useState(1);
 
-  // Calculate the index range for users on the current page
   const startIndex = (page - 1) * usersPerPage;
   const currentPageUsers = users.slice(startIndex, startIndex + usersPerPage);
 
@@ -59,7 +58,6 @@ const StatusPage = () => {
         ))}
       </List>
 
-      {/* Pagination Component */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Pagination
           count={Math.ceil(users.length / usersPerPage)}
