@@ -20,10 +20,9 @@ const RegistrationPage = () => {
   const [inviteCode, setInviteCode] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [randomUserMessage, setRandomUserMessage] = useState(""); // New state for random user alert
+  const [randomUserMessage, setRandomUserMessage] = useState("");
   const navigate = useNavigate();
 
-  // Automatically add random users every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       const randomName = faker.person.fullName();
@@ -32,24 +31,21 @@ const RegistrationPage = () => {
           ? inviteCodes[Math.floor(Math.random() * inviteCodes.length)]
           : "";
 
-      // Dispatch the user and set loading
       setLoading(true);
       dispatch(addUser({ name: randomName, inviteCode: randomCode }));
       setLoading(false);
 
-      // Show an alert for the random user addition
       const randomMessage = inviteCodes.includes(randomCode)
         ? `New user added with valid invite code: ${randomCode}`
         : "New user added to the general waitlist.";
       setRandomUserMessage(randomMessage);
 
-      // Hide the random user alert after 3 seconds
       setTimeout(() => {
         setRandomUserMessage("");
       }, 3000);
-    }, 10000); // Run every 10 seconds
+    }, 10000);
 
-    return () => clearInterval(interval); // Clean up on unmount
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   const handleSubmit = (e) => {
@@ -59,7 +55,6 @@ const RegistrationPage = () => {
       return;
     }
 
-    // Set loading as true while adding a user
     setLoading(true);
     dispatch(addUser({ name, inviteCode }));
     setMessage(
@@ -67,12 +62,11 @@ const RegistrationPage = () => {
         ? "Successfully added with invite code!"
         : "Added to general waitlist."
     );
-    setLoading(false); // Set loading to false after dispatching the user
+    setLoading(false);
 
     setName("");
     setInviteCode("");
 
-    // Hide the message after 3 seconds
     setTimeout(() => {
       setMessage("");
     }, 3000);
@@ -97,14 +91,12 @@ const RegistrationPage = () => {
         Join the Waitlist
       </Typography>
 
-      {/* Display message on form submission */}
       {message && (
         <Alert severity={inviteCodes.includes(inviteCode) ? "success" : "info"}>
           {message}
         </Alert>
       )}
 
-      {/* Display random user addition message */}
       {randomUserMessage && <Alert severity="info">{randomUserMessage}</Alert>}
 
       <form onSubmit={handleSubmit}>
@@ -129,7 +121,7 @@ const RegistrationPage = () => {
           color="primary"
           fullWidth
           sx={{ mt: 2 }}
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
           {loading ? (
             <CircularProgress size={24} color="secondary" />
